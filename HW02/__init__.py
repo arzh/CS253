@@ -1,2 +1,4 @@
 #!usr/bin/env python
-from hw2 import hw2Handler
+from rot13 import rot13Handler
+from signup import signupHandler
+from signup import signupThanksHandler
