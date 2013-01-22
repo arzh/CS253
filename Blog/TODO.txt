@@ -6,6 +6,7 @@ Spec:
 	Permalink page for entries
 
 TODO:
+[X] Set up base handler class with template rendering
 [ ] Create templates
 	[ ] Main page
 	[ ] ind post page
@@ -18,4 +19,4 @@ TODO:
 [ ] Create 'PostHandler' class (office hours 1)
 	[ ] Use permalink rendering
 [ ] Create 'BlogPost' class from database type (I forget the class)
-[ ] Add forwarding to main.py
+[X] Add forwarding to main.py

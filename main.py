@@ -16,10 +16,20 @@
 #
 import webapp2
 from HW01 import hw1Handler
+from HW02 import rot13Handler
+from HW02 import signupHandler
+from HW02 import signupThanksHandler
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello world!')
+        self.response.write('Welcome to CS253 home work')
 
-app = webapp2.WSGIApplication( [('/', MainHandler), ('/HW1', hw1Handler)], 
+app = webapp2.WSGIApplication( [('/', MainHandler), 
+								('/HW1', hw1Handler),
+								('/HW2/rot13', rot13Handler),
+								('/HW2/signup', signupHandler),
+								('/HW2/signup/thanks', signupThanksHandler),
+								('/Blog', BlogHandler),
+								('/Blog/newpost', CreateHandler),
+								('/Blog/([0-9]+)', PostHandler)], 
 								debug=True)
