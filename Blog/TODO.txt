@@ -1,0 +1,21 @@
+Spec:
+	Front page that list entries
+	Form to submit new entries (at /newpost)
+		must use form names 'subject' and 'content'
+		error out if either is missing
+	Permalink page for entries
+
+TODO:
+[ ] Create templates
+	[ ] Main page
+	[ ] ind post page
+	[ ] new post page
+[ ] Create CSS page
+	[X] How to link it to html? (inside <head> : <link type="text/css" rel="stylesheet" href="">)
+	[ ] How to upload the css to appengine
+[ ] Define database ('id':int, 'subject':string, 'content':text)
+[ ] Create 'NewPostHandler' class
+[ ] Create 'PostHandler' class (office hours 1)
+	[ ] Use permalink rendering
+[ ] Create 'BlogPost' class from database type (I forget the class)
+[ ] Add forwarding to main.py
