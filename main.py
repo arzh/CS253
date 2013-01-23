@@ -19,6 +19,9 @@ from HW01 import hw1Handler
 from HW02 import rot13Handler
 from HW02 import signupHandler
 from HW02 import signupThanksHandler
+from Blog import BlogHandler
+from Blog import CreateHandler
+from Blog import PostHandler
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):

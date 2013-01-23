@@ -7,16 +7,15 @@ Spec:
 
 TODO:
 [X] Set up base handler class with template rendering
-[ ] Create templates
-	[ ] Main page
-	[ ] ind post page
-	[ ] new post page
+[X] Create templates
+	[X] Main page
+	[X] ind post page
+	[X] new post page
 [ ] Create CSS page
 	[X] How to link it to html? (inside <head> : <link type="text/css" rel="stylesheet" href="">)
 	[ ] How to upload the css to appengine
-[ ] Define database ('id':int, 'subject':string, 'content':text)
-[ ] Create 'NewPostHandler' class
-[ ] Create 'PostHandler' class (office hours 1)
-	[ ] Use permalink rendering
-[ ] Create 'BlogPost' class from database type (I forget the class)
+[X] Create 'NewPostHandler' class
+[X] Create 'PostHandler' class (office hours 1)
+	[X] Use permalink rendering
+[X] Create 'BlogPost' class from database type (I forget the class)
 [X] Add forwarding to main.py
