@@ -3,14 +3,20 @@
 from google.appengine.ext import db
 
 from BaseHandler import WA2Handler
+from BaseHandler import TemplatedHTML
 
-error_class = "border: 1px solid red"
-reguler_class = ""
+error_class = "error-box"
+reguler_class = "norm-box"
 
-class BlogPost(db.Model):
+class BlogPost(TemplatedHTML, db.Model):
 	subject = db.StringProperty(required = True)
 	content = db.TextProperty(required = True)
 	created = db.DateTimeProperty(auto_now_add = True)
+	last_md = db.DateTimeProperty(auto_now = True)
+
+	def render(self):
+		self._render_text = self.content.replace('\n', "<br>");
+		return self.generate_page("post.html", post = self)
 
 class BlogHandler(WA2Handler):
 	def get(self):
@@ -70,6 +76,6 @@ class PostHandler(WA2Handler):
 	def get(self, post_id):
 		post = BlogPost.get_by_id(int(post_id))
 		if post:
-			self.render("post.html", post = post)
+			self.render("permalink.html", post = post)
 		else:
 			self.write("Post No exist!")

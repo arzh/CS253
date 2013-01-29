@@ -1,25 +1,21 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
-<html>
-	<head>
-		<title>Drunkgraming: New Post</title>
-		<!--<link type="text/css" rel="stylesheet" href="">-->
-	</head>
+{% block content %}
+	<h2> New Post </h2>
 
 	<form method="post">
 		<label> 
 			<div> Title </div> 
-			<input style="{{titleclass}}" type="text" name="subject" value="{{title}}">
-			<div> {{titleerror}} </div> 
+			<input class="{{titleclass}}" type="text" name="subject" value="{{title}}">
+			<div class="error"> {{titleerror}} </div> 
 		</label>
 
 		<label> 
 			<div> Post </div> 
-			<textarea style="{{textclass}}" name="content">{{tent}}</textarea> 
-			<div> {{texterror}} </div>
+			<textarea class="{{textclass}}" name="content">{{tent}}</textarea> 
+			<div class="error"> {{texterror}} </div>
 		</label>
 		<br>
 		<input type="submit" >
 	</form>
-
-</html>
+{% endblock %}

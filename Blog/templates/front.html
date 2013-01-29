@@ -1,17 +1,10 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
-<html>
-	 <head>
-	 	<title>Drunkgraming</title>
-	</head>
- 	<body>
- 		<h1> Blog Name Here </h1>
+{% block content %}
 
- 		{% for post in posts %}
- 		<div class="post-title"> {{post.subject}} </div> 
-		<pre class="post-content"> {{post.content}} </pre>
-		<hr>
-		{% endfor %}
+	{% for post in posts %}
+		{{post.render() | safe }}
+		<br><br>
+	{% endfor %}
 
- 	</body>
-</html>
+{% endblock %}
