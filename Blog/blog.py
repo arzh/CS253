@@ -1,29 +1,21 @@
 #!usr/bin/env python
 
-from google.appengine.ext import db
 
-from BaseHandler import WA2Handler
+from post import BlogPost
+from google.appengine.ext import db
+from BaseHandler import BlogBaseHandler
 from BaseHandler import TemplatedHTML
 
 error_class = "error-box"
 reguler_class = "norm-box"
 
-class BlogPost(TemplatedHTML, db.Model):
-	subject = db.StringProperty(required = True)
-	content = db.TextProperty(required = True)
-	created = db.DateTimeProperty(auto_now_add = True)
-	last_md = db.DateTimeProperty(auto_now = True)
 
-	def render(self):
-		self._render_text = self.content.replace('\n', "<br>");
-		return self.generate_page("post.html", post = self)
-
-class BlogHandler(WA2Handler):
+class BlogHandler(BlogBaseHandler):
 	def get(self):
 		posts = db.GqlQuery("select * from BlogPost order by created desc")
 		self.render("front.html", posts = posts)
 
-class CreateHandler(WA2Handler):
+class CreateHandler(BlogBaseHandler):
 	def reset_errors(self):
 		self.has_title_error = False
 		self.has_text_error = False
@@ -67,12 +59,10 @@ class CreateHandler(WA2Handler):
 			p = BlogPost(subject = title, content = con)
 			p.put()
 
-			post_id = str(p.key().id())
-			permalink = "/Blog/%s" % post_id
-			self.redirect(permalink)
+			self.redirect(p.permalink())
 			
 
-class PostHandler(WA2Handler):
+class PostHandler(BlogBaseHandler):
 	def get(self, post_id):
 		post = BlogPost.get_by_id(int(post_id))
 		if post:
