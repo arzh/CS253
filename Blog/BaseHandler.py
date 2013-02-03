@@ -50,9 +50,9 @@ class BlogBaseHandler(WA2Handler):
 
 	def set_user_cookie(self):
 		if self.current_user and self.save_user:
-			self.response.headers.add_header('Set-Cookie', "user="+HashStr.make_sstr(self.current_user.id_str()) + "; Expires= Tue, 1 Jan 2025 00:00:00 GMT")
+			self.response.headers.add_header('Set-Cookie', "user="+HashStr.make_sstr(self.current_user.id_str()) + "; Expires= Tue, 1 Jan 2025 00:00:00 GMT; Path=/")
 		else:
-			self.response.headers.add_header('Set-Cookie', "user="+HashStr.make_sstr(self.current_user.id_str()))
+			self.response.headers.add_header('Set-Cookie', "user="+HashStr.make_sstr(self.current_user.id_str() + "; Path=/"))
 
 
 

@@ -73,7 +73,7 @@ class signupHandler(BlogBaseHandler):
 		
 		#logging.info("username is: %s", self.userError)
 
-		rawPassword = self.request.get("pw")
+		rawPassword = self.request.get("password")
 		rawVerify = self.request.get("verify")
 		passwordsMatch = rawPassword == rawVerify
 
