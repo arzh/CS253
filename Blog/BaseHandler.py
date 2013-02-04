@@ -31,28 +31,34 @@ class WA2Handler(TemplatedHTML, webapp2.RequestHandler):
 		page = self.generate_page(template, **kw)
 		logging.info(page)
 		self.write(page)
+
+	def set_cookie(self, name, data, save = False):
+		dhash = HashStr.make_sstr(data)
+		cookie = "%s=%s;" % (name, dhash)
+		if save:
+			cookie = cookie+" Expires= Tue, 1 Jan 2025 00:00:00 GMT;"
+		cookie = cookie+" Path=/;"
+		self.response.headers.add_header('Set-Cookie', cookie)
+
+	def get_cookie(self, name):
+		cookie = self.request.cookies.get(name)
+		return cookie and HashStr.check_sstr(cookie)
+
 		
 class BlogBaseHandler(WA2Handler):
 	current_user = None
 	save_user = False
-	def get_user_from_cookie(self):
-		self.response.headers['Content-Type'] = 'text/plain'
-		cookie = self.request.cookies.get('user', "")
-		logging.info("Getuser cookie:"+cookie)
-		if cookie:
-			user_id = HashStr.check_sstr(cookie)
-			logging.info("Cookie worked: user_id:"+user_id)
-			self.current_user = User.get_by_id(int(user_id))
 
-	def set_new_user(self, user):
-		self.current_user = user
-		self.set_user_cookie()
+	#TODO: Add login to save cookie
+	#TODO: Add logout to delete the cookie
 
 	def set_user_cookie(self):
 		if self.current_user and self.save_user:
-			self.response.headers.add_header('Set-Cookie', "user="+HashStr.make_sstr(self.current_user.id_str()) + "; Expires= Tue, 1 Jan 2025 00:00:00 GMT; Path=/")
+			self.set_cookie("user", self.current_user.id_str(), True)
 		else:
-			self.response.headers.add_header('Set-Cookie', "user="+HashStr.make_sstr(self.current_user.id_str() + "; Path=/"))
+			self.set_cookie("user", self.current_user.id_str())
+
+	def initilize
 
 
 

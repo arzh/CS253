@@ -11,7 +11,7 @@ class User(BaseDBModel):
 	created = db.DateTimeProperty(auto_now_add = True)
 	last_li = db.DateTimeProperty(auto_now = True)
 
-	@staticmethod
-	def generate_new(name, pw, email=None):
+	@classmethod
+	def generate_new(cls, name, pw, email=None):
 		h = HashUser.generate_phash(name, pw)
 		return User(name = name, phash = h, email = email)

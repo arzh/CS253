@@ -92,10 +92,10 @@ class signupHandler(BlogBaseHandler):
 		#logging.info("email is: %s", self.emailError)
 
 		if not self.userData.isValid or not self.passData.isValid or not self.emailData.isValid:
-			logging.info("somethings gone wrong! userData:"+str(self.userData.isValid)+" passData: "+str(self.passData.isValid)+" emailData: "+str(self.emailData.isValid))
+			#logging.info("somethings gone wrong! userData:"+str(self.userData.isValid)+" passData: "+str(self.passData.isValid)+" emailData: "+str(self.emailData.isValid))
 			self.renderSignup()
 		else:
-			logging.info("it worked!")
+			#logging.info("it worked!")
 			newUser = User.generate_new(self.userData.data, rawPassword, rawEmail)
 			newUser.put()
 			self.set_new_user(newUser)
@@ -104,11 +104,11 @@ class signupHandler(BlogBaseHandler):
 
 class signupThanksHandler(BlogBaseHandler):
 	def get(self):
-		logging.info(str(self))
+		#logging.info(str(self))
 		self.get_user_from_cookie()
 		if not self.current_user:
 			self.redirect("/signup");
 
-		logging.info("Render the welcome screen")
-		#self.render("welcomenewuser.html", user_name = self.current_user.name)
+		#logging.info("Render the welcome screen")
+		#self.render("welcomenewuser.html", username = self.current_user.name)
 		self.write("Welcome %s!!!" % self.current_user.name)
