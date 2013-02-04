@@ -58,7 +58,7 @@ class BlogBaseHandler(WA2Handler):
 		else:
 			self.set_cookie("user", self.current_user.id_str())
 
-	def initilize
+	#def initilize <- TODO: finish fleshing this out
 
 
 
