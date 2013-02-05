@@ -7,7 +7,10 @@
 </head>
 
 <body>
-	<a href="/blog" class="main-title"> Whiskey Fueled Blog </a>
+	<div id="title" class="title">
+		<a href="/blog" class="main-title"> Whiskey Fueled Blog </a>
+		{{usertools | safe}}
+	</div>
 
 	<div id="content">
 	{% block content %}

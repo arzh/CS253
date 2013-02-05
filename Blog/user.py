@@ -15,3 +15,11 @@ class User(BaseDBModel):
 	def generate_new(cls, name, pw, email=None):
 		h = HashUser.generate_phash(name, pw)
 		return User(name = name, phash = h, email = email)
+
+	def check_password(self, pw):
+		salt = HashUser.break_salt(self.phash)
+		return self.phash == HashUser.generate_phash(self.name, pw, salt)
+
+	@classmethod
+	def get_by_name(cls, name):
+		return User.all().filter('name =', name).get()

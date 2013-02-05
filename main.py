@@ -18,6 +18,8 @@ import webapp2
 from HW01 import hw1Handler
 from HW02 import rot13Handler
 from Blog import signupHandler
+from Blog import loginHandler
+from Blog import logoutHandler
 from Blog import signupThanksHandler
 from Blog import BlogHandler
 from Blog import CreateHandler
@@ -25,11 +27,13 @@ from Blog import PostHandler
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Welcome to CS253 home work')
+        self.redirect('/blog')
 
 app = webapp2.WSGIApplication( [('/', MainHandler), 
 																('/signup', signupHandler),
-																('/signup/thanks', signupThanksHandler),
+																('/login', loginHandler),
+																('/logout', logoutHandler),
+																('/welcome', signupThanksHandler),
 																('/blog', BlogHandler),
 																('/blog/newpost', CreateHandler),
 																('/blog/([0-9]+)', PostHandler)], 

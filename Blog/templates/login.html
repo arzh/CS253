@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2> Login! </h2>
+<form method="post">
+	<label>Username: <input class="{{userData.rndClass}}" type="text" name="username" value="{{userData.data}}" > 
+		<label class="error"> {{userData.errorMsg}} </label>
+	</label>
+	<br>
+	<label>Password: <input class="{{passData.rndClass}}" type="password" name="password" > 
+		<label class="error"> {{passData.errorMsg}} </label>
+	</label>
+	<br>
+	<input type="submit" value="Login" >
+	<div class="help-text"> Don't have an account, <a href="/signup"> Sign up here </a> </div>
+</form>
+{% endblock %}

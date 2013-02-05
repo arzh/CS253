@@ -46,7 +46,7 @@ class inputData:
 	def set_false(self):
 		self.isValid = False
 		self.rndClass = ERROR_BOX
-		self.errorMsg = "%s is not valid" % self.name
+		self.errorMsg = "Invalid %s" % self.name
 
 
 class signupHandler(BlogBaseHandler):
@@ -56,7 +56,7 @@ class signupHandler(BlogBaseHandler):
 
 	def renderSignup(self):
 		#logging.info("userData:"+self.userData.data+" passData:"+self.passData.data+" emailData:"+self.emailData.data)
-		self.render("signup.html", userData = self.userData, passData = self.passData, emailData = self.emailData)
+		self.renderBlog("signup.html", userData = self.userData, passData = self.passData, emailData = self.emailData)
 
 	def resetErrors(self):
 		self.userData.reset()
@@ -69,7 +69,12 @@ class signupHandler(BlogBaseHandler):
 
 	def post(self):
 		self.resetErrors()
-		self.userData.is_valid(self.request.get("username"))
+		rawName = self.request.get("username")
+		if rawName and User.get_by_name(rawName):
+			self.userData.set_false()
+			self.userData.errorMsg = "Username already taken"
+		else:
+			self.userData.is_valid(rawName)
 		
 		#logging.info("username is: %s", self.userError)
 
@@ -96,19 +101,54 @@ class signupHandler(BlogBaseHandler):
 			self.renderSignup()
 		else:
 			#logging.info("it worked!")
-			newUser = User.generate_new(self.userData.data, rawPassword, rawEmail)
+			newUser = User.generate_new(rawName, rawPassword, rawEmail)
 			newUser.put()
-			self.set_new_user(newUser)
-			self.redirect("/signup/thanks")
+			self.login(newUser)
+			self.redirect("/welcome")
 
+class loginHandler(BlogBaseHandler):
+	userData = inputData(regex = USER_RE, name = "Username")
+	passData = inputData(regex = PASS_RE, name = "Password")
+
+	def reset(self):
+		self.userData.reset()
+		self.passData.reset()
+
+	def renderPage(self):
+		#logging.info("userData:"+self.userData.data+" passData:"+self.passData.data+" emailData:"+self.emailData.data)
+		self.renderBlog("login.html", userData = self.userData, passData = self.passData)
+
+	def get(self):
+		self.reset()
+		self.renderPage()
+
+	def post(self):
+		self.reset()
+
+		name = self.request.get("username")
+		u = User.get_by_name(name)
+		if not u:
+			self.userData.set_false()
+		else:
+			pw = self.request.get("password")	
+			if not u.check_password(pw):
+				self.passData.set_false()
+
+		if not self.userData.isValid or not self.passData.isValid:
+			self.renderPage()
+		else:
+			self.login(u)
+			self.redirect("/welcome")
 
 class signupThanksHandler(BlogBaseHandler):
 	def get(self):
-		#logging.info(str(self))
-		self.get_user_from_cookie()
+		logging.info(str(self.current_user))
 		if not self.current_user:
 			self.redirect("/signup");
+		else:
+			self.write("Welcome %s!!!" % self.current_user.name)
 
-		#logging.info("Render the welcome screen")
-		#self.render("welcomenewuser.html", username = self.current_user.name)
-		self.write("Welcome %s!!!" % self.current_user.name)
+class logoutHandler(BlogBaseHandler):
+	def get(self):
+		self.logout()
+		self.redirect('/blog')

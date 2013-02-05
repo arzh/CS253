@@ -33,6 +33,5 @@ class HashUser:
 		return "%s,%s" % (h, salt)
 
 	@staticmethod
-	def validate_password(name, pw, phash):
-		salt = phash.split(',')[1]
-		return phash == HashUser.generate_phash(name, pw, salt)
+	def break_salt(phash):
+		return phash.split(',')[1]

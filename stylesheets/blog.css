@@ -60,13 +60,32 @@ input[type=submit] {
   font-size: 24px;
 }
 
+.title + .title {
+    margin-top: 5px;
+}
+
 .main-title {
+    position: relative;
     display: block;
     color: #222;
     font-size: 40px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 30px;
+    text-decoration: none;
+}
+
+.logtools-position {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    color: #555;
+    font-size: 15px;
+}
+
+.logtools-link {
+    color: #555;
+    font-size: 15px;
     text-decoration: none;
 }
 
@@ -96,4 +115,12 @@ input[type=submit] {
 .post-content {
     margin-top: 5px;
 }
+
+.help-text {
+    position: relative;
+    font-size: 9px;
+    font-family: monospace;
+}
+
+
 

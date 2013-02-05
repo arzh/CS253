@@ -11,26 +11,33 @@ template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
 class TemplatedHTML:
-	def generate_page(self, template, **template_params):
+	@classmethod
+	def generate_page(cls, template, **template_params):
 		#logging.info(template)
 		#logging.info(str(template_params))
-		logging.info(str(self))
+		#logging.info(str(self))
 		t = jinja_env.get_template(template)
 		page = t.render(template_params)
-		logging.info(page)
+		#logging.info(page)
 		return page
 
 
 class WA2Handler(TemplatedHTML, webapp2.RequestHandler):
+	# General write 
 	def write(self, *a, **kw):
-		logging.info(str(*a))
+		#logging.info(str(*a))
 		self.response.out.write(*a, **kw)
 
+	# Template render function using TemplatedHTLM
 	def render(self, template, **kw):
-		logging.info(str(self))
+		#logging.info(str(self))
 		page = self.generate_page(template, **kw)
-		logging.info(page)
+		#logging.info(page)
 		self.write(page)
+
+	# Secure cookie helpers----------------------------------
+	def delete_cookie(self, name):
+		self.response.headers.add_header('Set-Cookie', "%s=; Thu, 01-Jan-1970 00:00:00 GMT; Path=/" % name)
 
 	def set_cookie(self, name, data, save = False):
 		dhash = HashStr.make_sstr(data)
@@ -43,22 +50,39 @@ class WA2Handler(TemplatedHTML, webapp2.RequestHandler):
 	def get_cookie(self, name):
 		cookie = self.request.cookies.get(name)
 		return cookie and HashStr.check_sstr(cookie)
+	#--------------------------------------------------------
 
 		
 class BlogBaseHandler(WA2Handler):
 	current_user = None
-	save_user = False
 
-	#TODO: Add login to save cookie
-	#TODO: Add logout to delete the cookie
+	def login(self, user, save = False):
+		self.set_cookie('user_id', user.id_str(), save)
+		self.current_user = user
 
-	def set_user_cookie(self):
-		if self.current_user and self.save_user:
-			self.set_cookie("user", self.current_user.id_str(), True)
+	def logout(self):
+		self.delete_cookie('user_id')
+
+	def initialize(self, *a, **kw):
+		webapp2.RequestHandler.initialize(self, *a, **kw)
+		uid = self.get_cookie('user_id')
+		#logging.info(str(uid))
+		if uid:
+			#logging.info("uid is valid")
+			self.current_user = User.get_by_id(int(uid))
 		else:
-			self.set_cookie("user", self.current_user.id_str())
+			#logging.info("uid is NOT valid")
+			self.current_user = None
 
-	#def initilize <- TODO: finish fleshing this out
+	def renderBlog(self, template, **params):
+		if self.current_user:
+			params["usertools"] = TemplatedHTML.generate_page("usertoolbar-in.html", username = self.current_user.name)
+		else:
+			params["usertools"] = TemplatedHTML.generate_page("usertoolbar-out.html")
+
+		self.render(template, **params)
+
+
 
 
 
