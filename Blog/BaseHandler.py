@@ -6,6 +6,7 @@ import jinja2
 from blackbox import HashStr
 import logging
 from user import User
+import time
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
@@ -56,7 +57,7 @@ class WA2Handler(TemplatedHTML, webapp2.RequestHandler):
 class BlogBaseHandler(WA2Handler):
 	current_user = None
 
-	def login(self, user, save = False):
+	def login(self, user, save = True):
 		self.set_cookie('user_id', user.id_str(), save)
 		self.current_user = user
 
@@ -81,6 +82,13 @@ class BlogBaseHandler(WA2Handler):
 			params["usertools"] = TemplatedHTML.generate_page("usertoolbar-out.html")
 
 		self.render(template, **params)
+
+class timerRedirectHandler(webapp2.RequestHandler):
+	def get(self):
+		wait = int(self.request.get("timer"))
+		nextpage = self.request.get("next")
+		time.sleep(5)
+		self.redirect("/%s" % nextpage)
 
 
 

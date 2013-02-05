@@ -37,29 +37,35 @@ class CreateHandler(BlogBaseHandler):
 		self.renderBlog("newpost.html", title = title, tent = tent, titleerror = self.titleError, titleclass = self.titleClass, texterror = self.textError, textclass = self.textClass)
 
 	def get(self):
-		self.reset_errors()
-		self.render_newpost()
+		if not self.current_user:
+			self.redirect("/login")
+		else:
+			self.reset_errors()
+			self.render_newpost()
 
 	def post(self):
-		self.reset_errors()
-
-		title = self.request.get("subject")
-		con = self.request.get("content")
-
-		if title == "":
-			self.has_title_error = True
-		if con == "":
-			self.has_text_error = True
-
-		self.handle_errors()
-
-		if self.has_text_error or self.has_title_error:
-			self.render_newpost(title, con)
+		if not self.current_user:
+			self.redirect("/login")
 		else:
-			p = BlogPost(subject = title, content = con)
-			p.put()
+			self.reset_errors()
 
-			self.redirect(p.permalink())
+			title = self.request.get("subject")
+			con = self.request.get("content")
+
+			if title == "":
+				self.has_title_error = True
+			if con == "":
+				self.has_text_error = True
+
+			self.handle_errors()
+
+			if self.has_text_error or self.has_title_error:
+				self.render_newpost(title, con)
+			else:
+				p = BlogPost(subject = title, content = con, username = self.current_user.name)
+				p.put()
+
+				self.redirect(p.permalink())
 			
 
 class PostHandler(BlogBaseHandler):

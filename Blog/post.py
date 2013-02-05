@@ -7,6 +7,7 @@ from BaseDB import BaseDBModel
 class PostDB(BaseDBModel):
 	subject = db.StringProperty(required = True)
 	content = db.TextProperty(required = True)
+	username = db.StringProperty(required = True)
 	created = db.DateTimeProperty(auto_now_add = True)
 	last_md = db.DateTimeProperty(auto_now = True)
 
