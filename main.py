@@ -36,7 +36,7 @@ app = webapp2.WSGIApplication( [('/', MainHandler),
 																('/logout', logoutHandler),
 																('/welcome', signupThanksHandler),
 																('/blog/?(?:\.json)?', BlogHandler),
-																('/blog/newpost', CreateHandler),
+																('/newpost', CreateHandler),
 																('/blog/([0-9]+)(?:\.json)?', PostHandler),
 																('/wait', timerRedirectHandler)], 
 																debug=True)
