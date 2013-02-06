@@ -56,7 +56,7 @@ class signupHandler(BlogBaseHandler):
 
 	def renderSignup(self):
 		#logging.info("userData:"+self.userData.data+" passData:"+self.passData.data+" emailData:"+self.emailData.data)
-		self.renderBlog("signup.html", userData = self.userData, passData = self.passData, emailData = self.emailData)
+		self.renderHtml("signup.html", userData = self.userData, passData = self.passData, emailData = self.emailData)
 
 	def resetErrors(self):
 		self.userData.reset()
@@ -116,7 +116,7 @@ class loginHandler(BlogBaseHandler):
 
 	def renderPage(self):
 		#logging.info("userData:"+self.userData.data+" passData:"+self.passData.data+" emailData:"+self.emailData.data)
-		self.renderBlog("login.html", userData = self.userData, passData = self.passData)
+		self.renderHtml("login.html", userData = self.userData, passData = self.passData)
 
 	def get(self):
 		self.reset()

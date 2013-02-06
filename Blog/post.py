@@ -18,3 +18,11 @@ class BlogPost(TemplatedHTML, PostDB):
 
 	def permalink(self):
 		return "/blog/%s" % self.id_str()
+
+	def as_dict(self):
+		post_dict = {'subject': self.subject,
+								 'content': self.content,
+								 'username': self.username,
+								 'created': self.created.strftime('%c'),
+								 'last_mod': self.last_md.strftime('%c')}
+		return post_dict

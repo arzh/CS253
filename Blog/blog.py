@@ -13,7 +13,12 @@ reguler_class = "norm-box"
 class BlogHandler(BlogBaseHandler):
 	def get(self):
 		posts = db.GqlQuery("select * from BlogPost order by created desc")
-		self.renderBlog("front.html", posts = posts)
+
+		if self.format == 'html':
+			self.renderHtml("front.html", posts = posts)
+		elif self.format == 'json':
+			self.renderJson([p.as_dict() for p in posts])
+
 
 class CreateHandler(BlogBaseHandler):
 	def reset_errors(self):
@@ -34,7 +39,7 @@ class CreateHandler(BlogBaseHandler):
 			self.textClass = error_class
 
 	def render_newpost(self, title="", tent=""):
-		self.renderBlog("newpost.html", title = title, tent = tent, titleerror = self.titleError, titleclass = self.titleClass, texterror = self.textError, textclass = self.textClass)
+		self.renderHtml("newpost.html", title = title, tent = tent, titleerror = self.titleError, titleclass = self.titleClass, texterror = self.textError, textclass = self.textClass)
 
 	def get(self):
 		if not self.current_user:
@@ -71,7 +76,10 @@ class CreateHandler(BlogBaseHandler):
 class PostHandler(BlogBaseHandler):
 	def get(self, post_id):
 		post = BlogPost.get_by_id(int(post_id))
-		if post:
-			self.renderBlog("permalink.html", post = post)
-		else:
-			self.write("Post No exist!")
+		if not post:
+			self.error(404)
+
+		if self.format == 'html':
+			self.renderHtml("permalink.html", post = post)
+		elif self.format == 'json':
+			self.renderJson(post.as_dict())

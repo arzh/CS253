@@ -7,6 +7,7 @@ from blackbox import HashStr
 import logging
 from user import User
 import time
+import json
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
@@ -67,21 +68,28 @@ class BlogBaseHandler(WA2Handler):
 	def initialize(self, *a, **kw):
 		webapp2.RequestHandler.initialize(self, *a, **kw)
 		uid = self.get_cookie('user_id')
-		#logging.info(str(uid))
 		if uid:
-			#logging.info("uid is valid")
 			self.current_user = User.get_by_id(int(uid))
 		else:
-			#logging.info("uid is NOT valid")
 			self.current_user = None
 
-	def renderBlog(self, template, **params):
+		if self.request.url.endswith('.json'):
+			self.format = 'json'
+		else:
+			self.format = 'html'
+
+	def renderHtml(self, template, **params):
 		if self.current_user:
 			params["usertools"] = TemplatedHTML.generate_page("usertoolbar-in.html", username = self.current_user.name)
 		else:
 			params["usertools"] = TemplatedHTML.generate_page("usertoolbar-out.html")
 
 		self.render(template, **params)
+
+	def renderJson(self, json_dump):
+		json_ren = json.dumps(json_dump)
+		self.response.headers['Content-Type'] = 'application/json; charset=UTF-8';
+		self.write(json_ren)
 
 class timerRedirectHandler(webapp2.RequestHandler):
 	def get(self):
