@@ -1,0 +1,136 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+
+    width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+    color: #333;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.error {
+    font-size: 10px;
+    color: red;
+}
+
+.error-box{
+    border: 1px solid red;
+}
+
+.norm-box{
+    border: 1px solid black;
+}
+
+label {
+  display: block;
+  font-size: 20px;
+}
+
+label + label {
+    margin-top: 20px;
+}
+
+input[type=text] {
+    width: 500px;
+    font-size: 20px;
+    padding: 2px;
+    font-family: monospace;
+}
+
+input[type=password] {
+    width: 500px;
+    font-size: 20px;
+    padding: 2px;
+    font-family: monospace;
+}
+
+textarea {
+  width: 500px;
+  height: 400px;
+  font-size: 17px;
+  font-family: monospace;
+}
+
+input[type=submit] {
+  font-size: 24px;
+}
+
+.title + .title {
+    margin-top: 5px;
+}
+
+.main-title {
+    position: relative;
+    display: block;
+    color: #222;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    text-decoration: none;
+}
+
+.logtools-position {
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    color: #555;
+    font-size: 15px;
+}
+
+.logtools-link {
+    color: #555;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.post + .post {
+    margin-top: 15px;
+}
+
+.post-heading {
+    position: relative;
+    border-bottom: 3px solid #666;
+}
+
+.post-title {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+    text-decoration: none;
+}
+
+.post-info-position {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+
+.post-content {
+    margin-top: 5px;
+}
+
+.help-text {
+    position: relative;
+    font-size: 9px;
+    font-family: monospace;
+}
+
+.cache-info {
+    position: absolute;
+    bottom: 3px;
+    right: 5px;
+    font-size: 8px;
+    font-family: monospace;
+    color: #999;
+}
+
+
+
