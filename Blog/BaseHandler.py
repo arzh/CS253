@@ -9,8 +9,11 @@ from user import User
 import time
 import json
 
+from google.appengine.api import memcache
+
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
+
 
 class TemplatedHTML:
 	@classmethod
@@ -97,6 +100,11 @@ class timerRedirectHandler(webapp2.RequestHandler):
 		nextpage = self.request.get("next")
 		time.sleep(5)
 		self.redirect("/%s" % nextpage)
+
+class flushHandler(webapp2.RequestHandler):
+	def get(self):
+		memcache.flush_all()
+		self.redirect('/blog')
 
 
 

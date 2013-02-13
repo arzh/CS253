@@ -8,3 +8,4 @@ from signup import loginHandler
 from signup import logoutHandler
 from signup import signupThanksHandler
 from BaseHandler import timerRedirectHandler
+from BaseHandler import flushHandler

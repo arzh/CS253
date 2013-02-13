@@ -25,6 +25,7 @@ from Blog import BlogHandler
 from Blog import CreateHandler
 from Blog import PostHandler
 from Blog import timerRedirectHandler
+from Blog import flushHandler
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -39,5 +40,6 @@ app = webapp2.WSGIApplication( [('/', MainHandler),
 																('/blog/?(?:\.json)?', BlogHandler),
 																('/blog/newpost', CreateHandler),
 																('/blog/([0-9]+)(?:\.json)?', PostHandler),
-																('/wait', timerRedirectHandler)], 
+																('/wait', timerRedirectHandler),
+																('/blog/flush', flushHandler)], 
 																debug=True)
