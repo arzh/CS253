@@ -39,14 +39,14 @@ class WA2Handler(TemplatedHTML, webapp2.RequestHandler):
 
 	# Secure cookie helpers----------------------------------
 	def delete_cookie(self, name):
-		self.response.headers.add_header('Set-Cookie', "%s=; Thu, 01-Jan-1970 00:00:00 GMT; Path=/" % name)
+		self.response.headers.add_header('Set-Cookie', "%s=; Path=/" % name)
 
 	def set_cookie(self, name, data, save = False):
 		dhash = HashStr.make_sstr(data)
-		cookie = "%s=%s;" % (name, dhash)
+		cookie = "%s=%s; Path=/;" % (name, dhash)
 		if save:
 			cookie = cookie+" Expires= Tue, 1 Jan 2025 00:00:00 GMT;"
-		cookie = cookie+" Path=/;"
+
 		self.response.headers.add_header('Set-Cookie', cookie)
 
 	def get_cookie(self, name):
@@ -58,7 +58,7 @@ class WA2Handler(TemplatedHTML, webapp2.RequestHandler):
 class BlogBaseHandler(WA2Handler):
 	current_user = None
 
-	def login(self, user, save = True):
+	def login(self, user, save = False):
 		self.set_cookie('user_id', user.id_str(), save)
 		self.current_user = user
 

@@ -15,29 +15,17 @@
 # limitations under the License.
 #
 import webapp2
-from HW01 import hw1Handler
-from HW02 import rot13Handler
-from Blog import signupHandler
-from Blog import loginHandler
-from Blog import logoutHandler
-from Blog import signupThanksHandler
-from Blog import BlogHandler
-from Blog import CreateHandler
-from Blog import PostHandler
-from Blog import timerRedirectHandler
+from HW03 import BlogHandler
+from HW03 import CreateHandler
+from HW03 import PostHandler
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        #self.redirect('/blog')
-        self.response.out.write("welcome")
+        self.response.out.write("welcome to webapp2")
 
 app = webapp2.WSGIApplication( [('/', MainHandler), 
-																('/blog/signup', signupHandler),
-																('/blog/login', loginHandler),
-																('/blog/logout', logoutHandler),
-																('/welcome', signupThanksHandler),
-																('/blog/?(?:\.json)?', BlogHandler),
+																('/blog', BlogHandler),
 																('/blog/newpost', CreateHandler),
-																('/blog/([0-9]+)(?:\.json)?', PostHandler),
-																('/wait', timerRedirectHandler)], 
-																debug=True)
+																('/blog/([0-9]+)', PostHandler)], 
+																debug=False)

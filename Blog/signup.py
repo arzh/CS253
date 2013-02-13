@@ -147,9 +147,9 @@ class signupThanksHandler(BlogBaseHandler):
 			self.redirect("/signup");
 		else:
 			self.write("Welcome %s!!!" % self.current_user.name)
-			self.redirect("/wait?timer=5&next=blog")
+			#self.redirect("/wait?timer=5&next=blog")
 
 class logoutHandler(BlogBaseHandler):
 	def get(self):
 		self.logout()
-		self.redirect('/blog')
+		self.redirect('/signup')
