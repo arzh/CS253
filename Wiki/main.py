@@ -15,16 +15,16 @@
 # limitations under the License.
 #
 import webapp2
+import re
+from src import Signup, Login, Logout, Welcome, EditPage, ViewPage, HistoryPage
 
 
-app = webapp2.WSGIApplication( [('/', MainHandler), 
-																('/blog/signup', signupHandler),
-																('/blog/login', loginHandler),
-																('/blog/logout', logoutHandler),
-																('/welcome', signupThanksHandler),
-																('/blog/?(?:\.json)?', BlogHandler),
-																('/blog/newpost', CreateHandler),
-																('/blog/([0-9]+)(?:\.json)?', PostHandler),
-																('/wait', timerRedirectHandler),
-																('/blog/flush', flushHandler)], 
-																debug=True)
+PAGE_RE = r"(/(?:[a-zA-Z0-9_-]+/?)*)"
+
+app = webapp2.WSGIApplication([('/signup', Signup),
+                               ('/login', Login),
+                               ('/logout', Logout),
+                               ('/_edit' + PAGE_RE, EditPage),
+                               ('/_history' + PAGE_RE, HistoryPage),
+                               (PAGE_RE, ViewPage)],
+															 debug=True)

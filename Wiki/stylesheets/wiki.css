@@ -76,15 +76,23 @@ input[type=submit] {
     text-decoration: none;
 }
 
-.logtools-position {
+.toolbar-log-position {
     position: absolute;
-    right: 5px;
+    right: 2px;
     top: 2px;
     color: #555;
     font-size: 15px;
 }
 
-.logtools-link {
+.toolbar-edit-position {
+    position: absolute;
+    right: 175px;
+    top: 2px;
+    color: #555;
+    font-size: 15px;
+}
+
+.toolbar-link {
     color: #555;
     font-size: 15px;
     text-decoration: none;

@@ -8,7 +8,11 @@
 
 <body>
 
-	{{toolbar | safe}}
+	<div id="title" class="title">
+		<a href="/" class="main-title"> This is a Wiki </a>
+		{{toolbar | safe}}
+	</div>
+
 
 	<div id="content">
 	{% block content %}
